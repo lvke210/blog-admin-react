@@ -34,6 +34,12 @@
   line-height: 5vh;
 }
 .content {
+  padding: 20px;
   flex: 1;
   background-color: rgb(216, 225, 228);
+}
+
+.ipt {
+  display: inline-block;
+  width: 200px;
 }
