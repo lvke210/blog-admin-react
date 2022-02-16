@@ -41,15 +41,17 @@ function delUser(id){
 }
 
 export default class User extends Component {
-  state={data:null}
+  state={loading : true}
   async componentDidMount(){
     const {data} = await getUser()
-    this.setState({data})
+    if(data){
+      this.setState({data, loading:false})
+    }
   }
   render() {
     return (
       <div>
-        <Table rowKey="id" columns={columns} dataSource={this.state.data} /> 
+        <Table loading={this.state.loading} rowKey="id" columns={columns} dataSource={this.state.data} /> 
       </div>
     )
   }

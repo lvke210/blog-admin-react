@@ -5,7 +5,7 @@ import User from "./view/user"
 import Article from './view/article'
 import Role from './view/role'
 import Hole from './view/hole'
-
+import Home from "./view/home"
 class Fhome extends Component {
 
   render() {
@@ -14,14 +14,16 @@ class Fhome extends Component {
         <div id="header">后台管理</div>
         <div id="center">
             <div className="navi">
-            <NavLink to ='/user'>用户管理</NavLink>
-            <NavLink to ='role'>角色管理</NavLink>
-            <NavLink to ='article'>文章管理</NavLink>
-            <NavLink to ='hole'>树洞管理</NavLink>
+                <NavLink to ='/'>首页</NavLink>
+                <NavLink to ='/user'>用户管理</NavLink>
+                <NavLink to ='role'>角色管理</NavLink>
+                <NavLink to ='article'>文章管理</NavLink>
+                <NavLink to ='hole'>树洞管理</NavLink>
             </div>
               <div className="content">
                   <Routes>
-                    <Route exact path="/user" element={<User />}/>
+                    <Route exact path="/" element={<Home />}/>
+                    <Route path="/user" element={<User />}/>
                     <Route path="/role" element={<Role/>}/>
                     <Route path="/article" element={ <Article/>}/>
                     <Route path="/hole" element={ <Hole/>}/>

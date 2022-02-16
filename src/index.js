@@ -5,11 +5,9 @@ import reportWebVitals from "./reportWebVitals";
 import Fhome from "./app";
 import { BrowserRouter } from "react-router-dom";
 ReactDOM.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <Fhome />
-    </BrowserRouter>
-  </React.StrictMode>,
+  <BrowserRouter>
+    <Fhome />
+  </BrowserRouter>,
   document.getElementById("root")
 );
 

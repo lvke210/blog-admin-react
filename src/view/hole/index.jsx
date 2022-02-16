@@ -43,15 +43,17 @@ function delMessage(id){
   console.log(id);
 }
 export default class Hole extends Component {
-  state={}
+  state={loading:true}
   async componentDidMount(){
     const {data} = await getHoleList()
-    this.setState({data:data.data})
+    if(data.data){
+      this.setState({data:data.data, loading : false})
+    }
   }
   render() {
     return (
       <div>
-        <Table rowKey="id" dataSource={this.state?.data} columns={columns}/>
+        <Table loading={this.state.loading} rowKey="id" dataSource={this.state?.data} columns={columns}/>
       </div>
     )
   }
