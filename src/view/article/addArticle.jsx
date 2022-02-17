@@ -1,43 +1,56 @@
-import React, { Component} from 'react'
+import React, { Component } from 'react'
 import {Modal,Input,Form,Row,Col} from "antd"
-import WangEdit from "../../conponents/editor"
+import ReactWEditor from 'wangeditor-for-react';
+import {addArticle} from "../../api"
 export default class AddArticle extends Component {
   constructor(props){
     super(props)
     this.state={
       visible:false,
+      loading:false,
       articleData:{}
     }
   }
-  cancel=()=>{
-    this.setState({visible:false})
-  }
+ 
   UNSAFE_componentWillReceiveProps(nextProps){
-    this.setState({visible: nextProps.visible});
+    this.setState({visible: nextProps.visible });
   }
-  add=()=>{
-    console.log("创建文章");
+  add=async ()=>{
+    this.setState({loading:true})
+   const {status} = await addArticle(this.state.articleData)
+   if(status===200) {
+     this.props.showModal()
+    this.setState({loading:false})
+   }
   }
   iptChange=(e)=>{
         const {articleData} = this.state
         articleData.title = e.target.value
         this.setState({articleData})
   }
+  cttChange=(html)=>{
+    const {articleData} = this.state
+    articleData.content = html
+    this.setState({articleData})
+  }
   render() {
-    const {visible,articleData} = this.state
+    const {articleData,loading} = this.state
+
     return (
-      <Modal title="添加博客" visible = {visible} width="80%" okText="提交" onOk={this.add} cancelText="取消" onCancel={this.cancel} maskClosable={false}>
+      <Modal title="添加博客" visible = {this.props.visible} width="80%" okText="提交" onOk={this.add} cancelText="取消" onCancel={()=>this.props.showModal()} maskClosable={false} loading = {loading}>
         <Form labelCol={{ span: 8 }} wrapperCol={{ span: 16 }}>
             <Row>
               <Col span={6}>
                 <Form.Item label="博客标题" name="username">
-                  <Input value={articleData.titles} onChange={this.iptChange} width="200px"/>
+                  <Input value={articleData?.title} onChange={this.iptChange} width="200px"/>
                 </Form.Item>
              </Col>
             </Row>
         </Form>
         <div>
-           <WangEdit ref={"wang"}/>
+         <ReactWEditor 
+           onChange={(html)=>this.cttChange(html)}
+         />
         </div>
         </Modal>
     )

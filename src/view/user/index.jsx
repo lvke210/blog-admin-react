@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {getUser } from "../../api"
-import { Table,Button, Popconfirm } from 'antd';
+import { Table,Button, Popconfirm ,Form, Input } from 'antd';
 const columns = [
   {
   title: '姓名',
@@ -11,6 +11,11 @@ const columns = [
   title: '密码',
   dataIndex: 'password',
   key: 'password',
+ },
+  {
+  title: '创建时间',
+  dataIndex: 'create_time',
+  key: 'create_time',
  },
   {
   title: 'ID',
@@ -41,16 +46,37 @@ function delUser(id){
 }
 
 export default class User extends Component {
-  state={loading : true}
+  state={
+    loading : true,
+    visible:false
+  }
   async componentDidMount(){
     const {data} = await getUser()
     if(data){
       this.setState({data, loading:false})
     }
   }
+
+  showModal=()=>{
+    this.setState({visible:!this.state.visible})
+  }
   render() {
     return (
       <div>
+         <div className='page-header'>
+          <Form   
+            name="basic-from"
+            labelCol={{ span: 8 }}
+            wrapperCol={{ span: 16 }}>
+                  <Form.Item label="ID" > <Input /> </Form.Item>
+                  <Form.Item label="姓名" > <Input /> </Form.Item>
+                  <Form.Item label="密码" > <Input /> </Form.Item>
+                  <Form.Item label="创建时间" > <Input /> </Form.Item>
+          </Form>
+        </div>
+        <div className='page-action'>
+          <Button onClick={this.showModal}>添加用户</Button>
+        </div>
         <Table loading={this.state.loading} rowKey="id" columns={columns} dataSource={this.state.data} /> 
       </div>
     )

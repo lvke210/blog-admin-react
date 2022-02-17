@@ -30,7 +30,7 @@ class Fhome extends Component {
                   </Routes>
               </div>
         </div>
-       <div id="footer">footer</div>
+       {/* <div id="footer">footer</div> */}
       </div>
     );
   }

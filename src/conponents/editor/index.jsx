@@ -1,17 +1,18 @@
-import { Component } from "react";
-import E from "wangeditor"
+import React, { useRef } from 'react';
+import ReactWEditor from 'wangeditor-for-react';
 
-export default class Editor extends Component{
-  
-   componentDidMount(){
-    const edit = new E('#editor')
-    edit.create()
-   }
-  render(){
-    return(
-      <div id="editor"></div>
-    )
-  }
-  
+function Wangeditor() {
+  let editorRef = useRef(null)
+  return (
+    <ReactWEditor
+      ref={editorRef}
+      onBlur={(html) => {
+        if (editorRef.current) {
+          console.log('ref')
+        }
+      }}
+    />
+  );
 }
- 
+
+export default Wangeditor;

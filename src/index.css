@@ -30,7 +30,8 @@ code {
 
 #center {
   display: flex;
-  height: 90vh;
+  min-height: 95vh;
+  height: max-content;
   /* padding: 0 10vw; */
 }
 #center ul {
@@ -66,13 +67,17 @@ code {
   display: inline-block;
   width: 200px;
 }
-.ant-table-cell {
+.ant-table-cell,
+.dangerouslySetInnerHTML {
   max-width: 600px !important;
   overflow: hidden;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+.dangerouslySetInnerHTML {
+  max-height: 25px;
 }
 .page-header {
   margin: 10px 0;
@@ -87,4 +92,7 @@ code {
   margin: 10px 0;
   padding: 5px;
   background-color: #fff;
+}
+.dangerouslySetInnerHTML p {
+  margin-bottom: 0;
 }
