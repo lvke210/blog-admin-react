@@ -58,7 +58,6 @@ export default class Hole extends Component {
   ]
 
    editBlog=(id)=>{
-    console.log(id)
     this.setState({visible:true})
   }
   
@@ -66,10 +65,15 @@ export default class Hole extends Component {
     console.log(id);
   }
   
-  async componentDidMount(){
+   componentDidMount(){
+    this.getData()
+  }
+
+  getData=async()=>{
     const {data} = await getArticleList()
     this.setState({data:data.data, loading : false})
   }
+
   showModal=()=>{
     this.setState({visible:!this.state.visible})
   }
@@ -92,7 +96,7 @@ export default class Hole extends Component {
           <Button onClick={this.showModal}>添加文章</Button>
         </div>
         <Table loading={this.state.loading} rowKey="id" dataSource={this.state?.data} columns={this.columns()}/>
-        <AddArticle visible={this.state.visible} data={this.state.data} showModal = {this.showModal}/>
+        <AddArticle visible={this.state.visible} data={this.state.data} showModal = {this.showModal} getData = {this.getData}/>
       </div>
     )
   }

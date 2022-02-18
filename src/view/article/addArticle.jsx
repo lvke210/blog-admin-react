@@ -20,7 +20,8 @@ export default class AddArticle extends Component {
    const {status} = await addArticle(this.state.articleData)
    if(status===200) {
      this.props.showModal()
-    this.setState({loading:false})
+     this.props.getData()
+     this.setState({loading:false})
    }
   }
   iptChange=(e)=>{
