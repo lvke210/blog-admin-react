@@ -16,4 +16,7 @@ const getArticleList = () => axios.get("/api/getArticleList");
 //新增博客
 const addArticle = (data) => axios.post("/api/addArticle", data);
 
-export { getUser, addArticle, getHoleList, getArticleList, addHole, addUser, delHole };
+//获取文件列表
+const getFiles = () => axios.get("/api/getFiles");
+
+export { getUser, addArticle, getHoleList, getArticleList, addHole, addUser, delHole, getFiles };
