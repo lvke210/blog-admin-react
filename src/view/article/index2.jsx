@@ -1,10 +1,17 @@
-import React,{useState,useEffect} from "react"
-import { Table ,Popover,Button,Popconfirm, Form, Input, Space} from "antd"
+import React, { Component } from 'react'
 import { getArticleList } from "../../api"
+import { Table ,Popover,Button,Popconfirm, Form, Input, Space} from "antd"
 import AddArticle from "./addArticle"
 
-export default  function Article () {
- const columns = ()=>[
+
+
+export default class Hole extends Component {
+  state={ 
+    loading : true,
+    visible:false
+  }
+
+  columns = ()=>[
     {
       title:"ID",
       dataIndex:"id"
@@ -17,7 +24,7 @@ export default  function Article () {
     {
       title:"内容",
       dataIndex:"content",
-      render:text=><div className='dangerouslySetInnerHTML' dangerouslySetInnerHTML={{__html:text}}></div>
+      render:text=><Popover content={text}><div className='dangerouslySetInnerHTML' dangerouslySetInnerHTML={{__html:text}}></div></Popover>
     },
     {
       title:"发布人",
@@ -33,6 +40,7 @@ export default  function Article () {
       title:"修改时间",
       dataIndex:"update_time",
     },
+    
     {
       title:"操作",
       render:(_,record)=>
@@ -43,28 +51,35 @@ export default  function Article () {
               > 
                   <Button type="danger" >删除</Button>
               </Popconfirm>
-             <Button type="primary" onClick={()=>editBlog(record.id)}>编辑</Button>
+             <Button type="primary" onClick={()=>this.editBlog(record.id)}>编辑</Button>
           </Space>
             
     }
   ]
-  const [tableData,setTableData] = useState([])
-  const [visible,setVisible] = useState(false)
-  const [editData,setEditData] = useState ({})
-  const editBlog = (id)=> {
-    setVisible(!visible)
-    const data = tableData.find(item=>item.id===id)
-    setEditData(data)
+
+   editBlog=(id)=>{
+    this.setState({visible:true})
+  }
+  
+   delMessage = (id) => {
+    console.log(id);
+  }
+  
+   componentDidMount(){
+    this.getData()
   }
 
-  useEffect(()=>{
-    getArticleList().then(res=>{
-      setTableData(res?.data?.data)
-    })
-  },[])
+  getData=async()=>{
+    const {data} = await getArticleList()
+    this.setState({data:data.data, loading : false})
+  }
 
-  return (
-    <div>
+  showModal=()=>{
+    this.setState({visible:!this.state.visible})
+  }
+  render() {
+    return (
+      <div>
         <div className='page-header'>
           <Form   
             name="basic-from"
@@ -78,18 +93,11 @@ export default  function Article () {
           </Form>
         </div>
         <div className='page-action'>
-          <Button >添加文章</Button>
+          <Button onClick={this.showModal}>添加文章</Button>
         </div>
-        <Table rowKey="id" dataSource={tableData} columns={columns()} />
-        <AddArticle  
-        visible={visible} 
-        editData = {editData}
-        onCloseModal={ ()=>{
-            setVisible(!visible)
-          }}
-        
-          /> 
+        <Table loading={this.state.loading} rowKey="id" dataSource={this.state?.data} columns={this.columns()}/>
+        <AddArticle visible={this.state.visible} data={this.state.data} showModal = {this.showModal} getData = {this.getData}/>
       </div>
-  )
+    )
+  }
 }
-
