@@ -4,9 +4,13 @@ import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import Fhome from "./app";
 import { BrowserRouter } from "react-router-dom";
+import { Provider } from "react-redux";
+import store from "./store";
 ReactDOM.render(
   <BrowserRouter>
-    <Fhome />
+    <Provider store={store}>
+      <Fhome />
+    </Provider>
   </BrowserRouter>,
   document.getElementById("root")
 );

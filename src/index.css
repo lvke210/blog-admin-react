@@ -96,3 +96,8 @@ code {
 .dangerouslySetInnerHTML p {
   margin-bottom: 0;
 }
+.page-body{
+  background-color: #fff;
+  height: 100%;
+  padding: 5px;
+}

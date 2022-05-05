@@ -73,7 +73,7 @@ export default class User extends Component {
                   <Form.Item label="密码" > <Input /> </Form.Item>
                   <Form.Item label="创建时间" > <Input /> </Form.Item>
           </Form>
-        </div>
+         </div>
         <div className='page-action'>
           <Button onClick={this.showModal}>添加用户</Button>
         </div>
